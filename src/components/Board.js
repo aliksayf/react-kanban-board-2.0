@@ -2,6 +2,7 @@ import React,  { useState } from "react";
 import { tasks, status, colors } from '../data/tasks';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import _ from 'lodash';
+import TaskCard from "./TaskCard";
 
 const onDragEnd = (result, taskList, setTaskList) => {
     if(!result.destination) return;
@@ -55,16 +56,16 @@ export default function Board() {
                                                         return (
                                                             <Draggable key={item.id} draggableId={item.id} index={index}>
                                                                 {(provided, snapshot) => {
-                                                                    return (
-                                                                        <div ref={provided.innerRef}
-                                                                             {...provided.draggableProps}
-                                                                             {...provided.dragHandleProps}
-                                                                             className={snapshot.isDragging ? 'item dimgrey' : 'item darkgrey' }
-                                                                             style={{ ...provided.draggableProps.style }}
-                                                                        >
-                                                                            {item.name}
-                                                                        </div>
-                                                                    )
+                                                                        return (
+                                                                            <div ref={provided.innerRef}
+                                                                                 {...provided.draggableProps}
+                                                                                 {...provided.dragHandleProps}
+                                                                                 className={snapshot.isDragging ? 'item dimgrey' : 'item darkgrey'}
+                                                                                 style={{...provided.draggableProps.style}}
+                                                                            >
+                                                                                <TaskCard item={item} />
+                                                                            </div>
+                                                                        )
                                                                 }}
                                                             </Draggable>
                                                         );
