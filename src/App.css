@@ -17,3 +17,23 @@
     min-height: 50px;
     color: white;
 }
+
+.lightblue {
+    background: lightblue;
+}
+
+.lightgrey {
+    background: lightgrey;
+}
+
+.dimgrey {
+    background: dimgrey;
+}
+
+.darkgrey {
+    background: darkgrey;
+}
+
+.title-border {
+    border-bottom: 3px solid ;
+}

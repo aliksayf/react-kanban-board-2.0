@@ -1,13 +1,11 @@
 import React,  { useState } from "react";
-import { tasks, status } from '../data/tasks';
+import { tasks, status, colors } from '../data/tasks';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
-import uuid from 'uuid/v4';
 import _ from 'lodash';
 
 const onDragEnd = (result, taskList, setTaskList) => {
     if(!result.destination) return;
     const { source, destination } = result;
-
     const column = _.cloneDeep(taskList);
     if (source.droppableId !== destination.droppableId) {
 
@@ -33,32 +31,25 @@ const onDragEnd = (result, taskList, setTaskList) => {
 export default function Board() {
 
     const [taskList, setTaskList] = useState(newArr)
-    // console.log(taskList)
 
     return (
         <div className='board' >
             <DragDropContext onDragEnd={result => onDragEnd(result, taskList, setTaskList)}>
-                {Object.entries(taskList).map(([id, column]) => {
+                {Object.entries(taskList).map(([id, column], idx) => {
                     return (
-                        <div style={{
-                            display: 'flelx',
-                            flexDirection: 'column',
-                            alignItems: 'center'
-                        }}
+                        <div className='d-flex flex-column align-items-center'
                              key={id}
                              >
-                            <h2>{column.name}</h2>
-                            <div style={{ margin: 8}}>
+                            <div className='m-1' >
+                                <h4 className={'align-center title-border border-' + colors[idx]}>
+                                    {column.name} <span className='small font-italic'>( {column.items.length} )</span></h4>
                                 <Droppable droppableId={id} key={id}>
                                     {(provided, snapshot) => {
                                         return (
                                             <div
                                                 {...provided.droppableProps}
                                                 ref={provided.innerRef}
-                                                className='group'
-                                                style={{
-                                                    background: snapshot.isDraggingOver ? 'lightblue' : 'lightgrey',
-                                                }}
+                                                className={snapshot.isDraggingOver ? 'group lightblue' : 'group lightgrey'}
                                             >
                                                     {column.items.map((item, index) => {
                                                         return (
@@ -68,11 +59,8 @@ export default function Board() {
                                                                         <div ref={provided.innerRef}
                                                                              {...provided.draggableProps}
                                                                              {...provided.dragHandleProps}
-                                                                             className='item'
-                                                                             style={{
-                                                                                 backgroundColor: snapshot.isDragging ? '#263B4A' : '#456C86',
-                                                                                 ...provided.draggableProps.style
-                                                                             }}
+                                                                             className={snapshot.isDragging ? 'item dimgrey' : 'item darkgrey' }
+                                                                             style={{ ...provided.draggableProps.style }}
                                                                         >
                                                                             {item.name}
                                                                         </div>
