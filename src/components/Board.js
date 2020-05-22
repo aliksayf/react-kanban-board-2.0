@@ -60,7 +60,7 @@ export default function Board() {
                                                                             <div ref={provided.innerRef}
                                                                                  {...provided.draggableProps}
                                                                                  {...provided.dragHandleProps}
-                                                                                 className={snapshot.isDragging ? 'item dimgrey' : 'item darkgrey'}
+                                                                                 className={snapshot.isDragging ? 'item dimgrey' : 'item white'}
                                                                                  style={{...provided.draggableProps.style}}
                                                                             >
                                                                                 <TaskCard item={item} />

@@ -1,6 +1,7 @@
 import uuid from 'uuid/v4';
 
 
+export const priorityColors = {'High': 'high', 'Mid': 'mid', 'Low': 'low'}
 export const colors = ['danger', 'warning', 'info', 'success'];
 export const status = [
     {id: 1, items: [], name: 'Todo', },

@@ -30,8 +30,21 @@
     background: dimgrey;
 }
 
-.darkgrey {
-    background: darkgrey;
+.white {
+    background: white;
+    color: gray;
+}
+
+.high {
+    color: #dc3545!important;
+}
+
+.mid {
+    color: #f0ad4e !important;
+}
+
+.low {
+    color: #6c757d!important;
 }
 
 .title-border {

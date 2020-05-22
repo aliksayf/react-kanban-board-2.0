@@ -1,11 +1,17 @@
 import React from "react";
+import { priorityColors, colors } from "../data/tasks";
+import { FaExclamationTriangle } from 'react-icons/fa'
 
 export default function TaskCard (props) {
-        console.log(props.item)
-    return (
+
+     return (
         <>
-            {props.item.name}
-            <p>{props.item.priority}</p>
+            <p>
+                {props.item.name}
+            </p>
+            <p>
+                <FaExclamationTriangle  className={priorityColors[props.item.priority]}/>
+            </p>
         </>
     )
 }
