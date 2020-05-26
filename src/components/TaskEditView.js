@@ -5,12 +5,11 @@ import {FaCircle, FaExclamationTriangle} from "react-icons/fa";
 function TaskDetailsView(props) {
 
     const {item} = props
-    console.log(item.name)
 
     return (
         <>
             <div className='container p-4 '>
-                <h5>{item.name}</h5>
+                <h5> EDIT {item.name}</h5>
                 <table className="table table-borderless">
                     <tbody>
                     <thead>
@@ -38,8 +37,8 @@ function TaskDetailsView(props) {
                 <label>Description:</label>
                 <p>{item.description}</p>
                 <div>
-                    <button onClick={() => props.setShow(props.item, 'edit')}>Edit</button>
-                    <button onClick={props.setShow}>Close</button>
+                    <button onClick={() => props.setShow(props.item, 'edit')}>Save</button>
+                    <button onClick={() => props.setShow(props.item, 'details')}>Cancel</button>
                 </div>
             </div>
         </>

@@ -15,10 +15,11 @@ const onDragEnd = (result, taskList, setTaskList) => {
         const sourceItems = [...sourceColumn.items];
         const destItems = [...destColumn.items];
         const [removed] = sourceItems.splice(source.index, 1);
+        const removedId = removed.id
         destItems.splice(destination.index, 0, removed);
         column[source.droppableId].items = sourceItems
         column[destination.droppableId].items = destItems
-        console.log('cl', column)
+        column.map((el, idx) => el.items.map(task => task.id === removedId ? task.status = idx + 1 : ''))
         setTaskList(column)
     } else {
         const [removed] = column[source.droppableId].items.splice(source.index, 1)           // source.index - index of dragged item
@@ -51,7 +52,7 @@ export default function Board(props) {
                                             <div
                                                 {...provided.droppableProps}
                                                 ref={provided.innerRef}
-                                                className={snapshot.isDraggingOver ? 'group lightblue' : 'group lightgrey'}
+                                                className={snapshot.isDraggingOver ? 'group target-col' : 'group status-col'}
                                             >
                                                 {column.items.map((item, index) => {
                                                     return (
@@ -63,7 +64,7 @@ export default function Board(props) {
                                                                          {...provided.dragHandleProps}
                                                                          onClick={() => props.setShow(item, 'details')}
                                                                         // style={{...provided.draggableProps.style}}
-                                                                         className={snapshot.isDragging ? 'item dimgrey' : 'item white'}
+                                                                         className={snapshot.isDragging ? 'item dragging' : 'item'}
                                                                     >
                                                                         <TaskCard item={item}/>
                                                                             </div>

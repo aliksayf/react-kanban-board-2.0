@@ -18,23 +18,25 @@
     color: white;
     box-shadow: 0 0 1px 0 rgba(9, 30, 66, 0.31), 0 2px 4px -1px rgba(9, 30, 66, 0.25);
     border-radius: 2px;
+    cursor: move !important;
+    background: white;
+    color: gray;
 }
 
-.lightblue {
-    background: lightblue;
+.target-col {
+    background: lightgray;
+    border: #6c757d dashed 2px;
 }
 
-.lightgrey {
+.status-col {
     background: #f4f5f7;
 }
 
-.dimgrey {
-    background: dimgrey;
+.dragging {
+    /*background: linen;*/
 }
 
 .white {
-    background: white;
-    color: gray;
 }
 
 .high {

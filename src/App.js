@@ -9,9 +9,10 @@ function App() {
     const [modalType, setModalType] = useState('');
 
     const handleShowModal = (object, type) => {
-        setShow(!show)
+        setShow(true)
         setModalItem(object)
         setModalType(type)
+        console.log(type)
     };
 
     return (
