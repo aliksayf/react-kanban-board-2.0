@@ -1,24 +1,17 @@
-import React, {useState} from "react";
-import { priorityColors } from "../data/tasks";
-import { FaExclamationTriangle } from 'react-icons/fa'
-import TaskDetailsView from "./TaskDetailsView";
+import React from "react";
+import {priorityColors} from "../data/tasks";
+import {FaExclamationTriangle} from 'react-icons/fa'
 
-export default function TaskCard (props) {
+export default function TaskCard(props) {
 
-
-    const toggleModal = () => {
-        if( props.modal === 'modal'){
-            props.setModal('show')
-        }else props.setModal('modal')
-    }
 
     return (
-        <div className='m-n2 p-2 pb-sm-0' onClick={toggleModal}>
+        <div className='m-n2 p-2 pb-sm-0'>
             <p>
                 {props.item.name}
             </p>
             <p>
-                <FaExclamationTriangle  className={priorityColors[props.item.priority]}/>
+                <FaExclamationTriangle className={priorityColors[props.item.priority]}/>
             </p>
 
 

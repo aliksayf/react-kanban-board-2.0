@@ -1,37 +1,45 @@
-import React, { useEffect, useState, useRef } from 'react'
+import React from 'react'
+import {colors, priorityColors, statuses} from "../data/tasks";
+import {FaCircle, FaExclamationTriangle} from "react-icons/fa";
 
-function TaskDetailsView() {
-    const outside = useRef()
-    const [isOpen, setIsOpen] = useState(false)
+function TaskDetailsView(props) {
 
-    const handleClick = e => {
-        if (outside.current.contains(e.target)) {
-            return
-        }
-        setIsOpen(false)
-    }
-
-    useEffect(() => {
-        const getClick = document.addEventListener('click', handleClick)
-
-        return () => {
-            getClick()
-        }
-    }, [])
+    const {item} = props
+    console.log(item.name)
 
     return (
-        <div
-            ref={outside}
-            >
-            <button onClick={() => setIsOpen(!isOpen)}>toggle modal</button>
-            {isOpen ? (
-                <div className="myModal">
-                    <p>Modal is open</p>
-                </div>
-            ) : null}
-        </div>
+        <>
+            <div className='container p-4 '>
+                <h5>{item.name}</h5>
+                <table className="table table-borderless">
+                    <tbody>
+                    <thead>
+                    </thead>
+                    <tr className='row'>
+                        <td className="col-2">Status:</td>
+                        <td className="col-6">
+                            <span>
+                                <FaCircle className={'text-' + colors[item.status - 1]}/>
+                            </span>
+                            {'  '}{statuses[item.status - 1]}
+                        </td>
+                    </tr>
+                    <tr className='row'>
+                        <td className="col-2">Priority:</td>
+                        <td className="col-6">
+                            <span>
+                                <FaExclamationTriangle className={priorityColors[item.priority]}/>
+                            </span>
+                            {'  '}{item.priority}
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+                <label>Description:</label>
+                <p>{item.description}</p>
+            </div>
+        </>
     )
 }
 
 export default TaskDetailsView;
-//  https://www.youtube.com/watch?v=xSp98W9EYP8
