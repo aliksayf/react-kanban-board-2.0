@@ -8,7 +8,6 @@ function Modals(props) {
 
     const handleClose = () => props.setShow();
     // const handleShow = () => props.setShow;
-    console.log(props.item)
 
     switch (props.type) {
         case 'details':
@@ -29,7 +28,7 @@ function Modals(props) {
                     <Modal show={props.show}
                            size="lg"
                            onHide={handleClose}>
-                        <TaskEditView item={props.item} setShow={props.setShow}/>
+                        <TaskEditView item={props.item} setShow={props.setShow} changeTask={props.changeTask}/>
                     </Modal>
                 </>
             );

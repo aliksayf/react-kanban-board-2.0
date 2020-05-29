@@ -1,5 +1,5 @@
-import React, {useState} from "react";
-import {colors, status, tasks} from '../data/tasks';
+import React from "react";
+import {colors} from '../data/tasks';
 import {DragDropContext, Draggable, Droppable} from 'react-beautiful-dnd';
 import _ from 'lodash';
 import TaskCard from "./TaskCard";
@@ -27,12 +27,12 @@ const onDragEnd = (result, taskList, setTaskList) => {
         setTaskList(column)
     }
 };
-    const newArr = [...status]
-    tasks.map(el => newArr[el.status - 1].items.push(el))
 
 export default function Board(props) {
 
-    const [taskList, setTaskList] = useState(newArr)
+    const taskList = props.taskList
+    // const [taskList, setTaskList] = useState(props.taskList)
+    const setTaskList = props.setTaskList
 
     return (
         <div className='board'>
@@ -41,7 +41,7 @@ export default function Board(props) {
                     return (
                         <div className='d-flex flex-column align-items-center mt-5'
                              key={id}
-                             >
+                        >
                             <div className='m-1'>
                                 <h6 className={'text-secondary align-center title-border border-' + colors[idx]}>
                                     {column.name.toUpperCase()} {column.items.length}  </h6>

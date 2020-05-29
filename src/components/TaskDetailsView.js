@@ -5,7 +5,6 @@ import {FaCircle, FaExclamationTriangle} from "react-icons/fa";
 function TaskDetailsView(props) {
 
     const {item} = props
-    console.log(item.name)
 
     return (
         <>

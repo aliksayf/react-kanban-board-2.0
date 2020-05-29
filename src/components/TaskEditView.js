@@ -14,6 +14,11 @@ function TaskDetailsView(props) {
     const {item} = props
     const [editedItem, setEditedItem] = useState(props.item)
 
+    const saveChanges = () => {
+        props.changeTask(item.id, editedItem)
+        props.setShow(editedItem, 'details')
+    }
+
     return (
         <>
             <div className='container p-4 '>
@@ -22,22 +27,39 @@ function TaskDetailsView(props) {
                     <tr className='row'>
                         <td className="col-1">Name:</td>
                         <td className="col-6">
-                            <input className="form-control-plaintext-sm" value={' ' + editedItem.name}/>
+                            <input className="form-control-plaintext-sm"
+                                   value={' ' + editedItem.name}
+                                   onChange={(e) => setEditedItem({...editedItem, name: e.target.value})}
+                            />
                         </td>
                     </tr>
                     <tr className='row'>
                         <td className="col-1">Status:</td>
                         <td className="col-sm-4">
-                            <select className="form-control-sm" id="selectStatus">
-                                {statuses.map((el, i) => (<option key={i}>{el}</option>))}
+                            <select className="form-control-sm"
+                                    id="selectStatus"
+                                    value={statuses[editedItem.status - 1]}
+                                    onChange={(e) => setEditedItem({
+                                        ...editedItem,
+                                        status: statuses.indexOf(e.target.value) + 1
+                                    })}
+                            >
+                                {statuses.map((el, i) => (
+                                    <option key={i}>{el}</option>
+                                ))}
                             </select>
                         </td>
                     </tr>
                     <tr className='row'>
                         <td className="col-1">Priority:</td>
                         <td className="col-sm-4">
-                            <select className="form-control-sm" id="selectPriority">
-                                {priority.map(el => (<option key={el}>{el}</option>))}
+                            <select className="form-control-sm"
+                                    id="selectPriority"
+                                    value={editedItem.priority}
+                                    onChange={(e) => setEditedItem({...editedItem, priority: e.target.value})}
+                            >
+                                {priority.map(el => (
+                                    <option key={el} selected={el === editedItem.priority}>{el}</option>))}
                             </select>
                         </td>
                     </tr>
@@ -53,7 +75,10 @@ function TaskDetailsView(props) {
                                 value={editedItem.description}
                                 // config={config}
                                 tabIndex={1} // tabIndex of textarea
-                                onBlur={newContent => setEditedItem(newContent)} // preferred to use only this option to update the content for performance reasons
+                                onBlur={newContent => setEditedItem({
+                                    ...editedItem,
+                                    description: newContent
+                                })} // preferred to use only this option to update the content for performance reasons
                                 onChange={newContent => {
                                 }}
                             />
@@ -61,9 +86,8 @@ function TaskDetailsView(props) {
                     </tr>
                     </tbody>
                 </table>
-                {/*<label>Description:</label>*/}
 
-                <button onClick={() => props.setShow(props.item, 'edit')}>Save</button>
+                <button onClick={saveChanges}>Save</button>
                 <button onClick={() => props.setShow(props.item, 'details')}>Cancel</button>
             </div>
         </>
