@@ -1,45 +1,70 @@
-import React from 'react'
-import {colors, priorityColors, statuses} from "../data/tasks";
-import {FaCircle, FaExclamationTriangle} from "react-icons/fa";
+import React, {useRef, useState} from 'react'
+import JoditEditor from "jodit-react";
+import {priority, statuses} from "../data/tasks";
+
 
 function TaskDetailsView(props) {
 
+    const editor = useRef(null)
+
+    // const config = {
+    //     readonly: false // all options from https://xdsoft.net/jodit/doc/
+    // }
+
     const {item} = props
+    const [editedItem, setEditedItem] = useState(props.item)
 
     return (
         <>
             <div className='container p-4 '>
-                <h5> EDIT {item.name}</h5>
                 <table className="table table-borderless">
                     <tbody>
-                    <thead>
-                    </thead>
                     <tr className='row'>
-                        <td className="col-2">Status:</td>
+                        <td className="col-1">Name:</td>
                         <td className="col-6">
-                            <span>
-                                <FaCircle className={'text-' + colors[item.status - 1]}/>
-                            </span>
-                            {'  '}{statuses[item.status - 1]}
+                            <input className="form-control-plaintext-sm" value={' ' + editedItem.name}/>
                         </td>
                     </tr>
                     <tr className='row'>
-                        <td className="col-2">Priority:</td>
-                        <td className="col-6">
-                            <span>
-                                <FaExclamationTriangle className={priorityColors[item.priority]}/>
-                            </span>
-                            {'  '}{item.priority}
+                        <td className="col-1">Status:</td>
+                        <td className="col-sm-4">
+                            <select className="form-control-sm" id="selectStatus">
+                                {statuses.map((el, i) => (<option key={i}>{el}</option>))}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr className='row'>
+                        <td className="col-1">Priority:</td>
+                        <td className="col-sm-4">
+                            <select className="form-control-sm" id="selectPriority">
+                                {priority.map(el => (<option key={el}>{el}</option>))}
+                            </select>
+                        </td>
+                    </tr>
+                    <tr className='row'>
+                        <td className="col-1">Description:</td>
+                        <td className="col-3"></td>
+                    </tr>
+                    <tr className='row'>
+                        <td className="col-1"></td>
+                        <td className='col-10'>
+                            <JoditEditor
+                                ref={editor}
+                                value={editedItem.description}
+                                // config={config}
+                                tabIndex={1} // tabIndex of textarea
+                                onBlur={newContent => setEditedItem(newContent)} // preferred to use only this option to update the content for performance reasons
+                                onChange={newContent => {
+                                }}
+                            />
                         </td>
                     </tr>
                     </tbody>
                 </table>
-                <label>Description:</label>
-                <p>{item.description}</p>
-                <div>
-                    <button onClick={() => props.setShow(props.item, 'edit')}>Save</button>
-                    <button onClick={() => props.setShow(props.item, 'details')}>Cancel</button>
-                </div>
+                {/*<label>Description:</label>*/}
+
+                <button onClick={() => props.setShow(props.item, 'edit')}>Save</button>
+                <button onClick={() => props.setShow(props.item, 'details')}>Cancel</button>
             </div>
         </>
     )

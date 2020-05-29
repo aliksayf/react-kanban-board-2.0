@@ -33,7 +33,6 @@ const onDragEnd = (result, taskList, setTaskList) => {
 export default function Board(props) {
 
     const [taskList, setTaskList] = useState(newArr)
-    const [modal, setModal] = useState('modal')
 
     return (
         <div className='board'>
