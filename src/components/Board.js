@@ -1,8 +1,9 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {colors} from '../data/tasks';
 import {DragDropContext, Draggable, Droppable} from 'react-beautiful-dnd';
 import _ from 'lodash';
 import TaskCard from "./TaskCard";
+
 
 const onDragEnd = (result, taskList, setTaskList) => {
     if (!result.destination) return;
@@ -28,11 +29,11 @@ const onDragEnd = (result, taskList, setTaskList) => {
     }
 };
 
+
 export default function Board(props) {
 
-    const taskList = props.taskList
-    // const [taskList, setTaskList] = useState(props.taskList)
-    const setTaskList = props.setTaskList
+    const [taskList, setTaskList] = useState(props.taskArray)
+    useEffect(() => setTaskList(props.taskArray), [props.taskArray]);
 
     return (
         <div className='board'>
@@ -82,6 +83,7 @@ export default function Board(props) {
                     );
                 })}
             </DragDropContext>
+
         </div>
     );
 }

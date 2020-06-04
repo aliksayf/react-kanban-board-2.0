@@ -5,7 +5,7 @@ import Modals from "./components/Modals";
 import {status, tasks} from "./data/tasks";
 import _ from "lodash";
 
-const newArr = [...status]
+const newArr = _.cloneDeep(status)
 tasks.map(el => newArr[el.status - 1].items.push(el))
 
 function App() {
@@ -23,20 +23,18 @@ function App() {
     const changeTask = (id, obj) => {
         const newList = _.cloneDeep(taskList);
         newList.map((el, idx) => el.items.map((task, index) => task.id === id ? newList[idx].items[index] = Object.assign(obj) : ''))
-        // console.log('change1', newList)
-        // for (let [key, value] of Object.entries(newList)){
-        //     value.items.map(el => el.id === id ? obj : el)
-        // }          //.map(([key, el])=> el.items.map(el => el.id === id ? obj : el))
-        console.log('change', newList)
-        setTaskList(newList)
+        const newTasks = []
+        newList.map(el => el.items.map(task => newTasks.push(task)))
+        const changedTaskList = _.cloneDeep(status)
+        newTasks.map(el => changedTaskList[el.status - 1].items.push(el))
+        setTaskList(changedTaskList)
     };
 
     return (
         <div>
 
             <Board setShow={handleShowModal}
-                   taskList={taskList}
-                   setTaskList={setTaskList}
+                   taskArray={taskList}
             />
             <Modals show={show}
                     setShow={handleShowModal}
