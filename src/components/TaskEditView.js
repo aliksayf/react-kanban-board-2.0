@@ -1,5 +1,7 @@
 import React, {useRef, useState} from 'react'
 import JoditEditor from "jodit-react";
+import 'jodit';
+import 'jodit/build/jodit.min.css';
 import {priority, statuses} from "../data/tasks";
 
 
@@ -7,9 +9,9 @@ function TaskDetailsView(props) {
 
     const editor = useRef(null)
 
-    // const config = {
-    //     readonly: false // all options from https://xdsoft.net/jodit/doc/
-    // }
+    const config = {
+        readonly: false // all options from https://xdsoft.net/jodit/doc/
+    }
 
     const {item} = props
     const [editedItem, setEditedItem] = useState(props.item)
@@ -59,7 +61,7 @@ function TaskDetailsView(props) {
                                     onChange={(e) => setEditedItem({...editedItem, priority: e.target.value})}
                             >
                                 {priority.map(el => (
-                                    <option key={el} selected={el === editedItem.priority}>{el}</option>))}
+                                    <option key={el} value={el === editedItem.priority}>{el}</option>))}
                             </select>
                         </td>
                     </tr>
@@ -73,11 +75,11 @@ function TaskDetailsView(props) {
                             <JoditEditor
                                 ref={editor}
                                 value={editedItem.description}
-                                // config={config}
+                                config={config}
                                 tabIndex={1} // tabIndex of textarea
                                 onBlur={newContent => setEditedItem({
                                     ...editedItem,
-                                    description: newContent
+                                    description: newContent.toString()
                                 })} // preferred to use only this option to update the content for performance reasons
                                 onChange={newContent => {
                                 }}
@@ -87,8 +89,10 @@ function TaskDetailsView(props) {
                     </tbody>
                 </table>
 
-                <button onClick={saveChanges}>Save</button>
-                <button onClick={() => props.setShow(props.item, 'details')}>Cancel</button>
+                <button className='btn btn-link float-right'
+                        onClick={() => props.setShow(props.item, 'details')}>Cancel
+                </button>
+                <button className='btn btn-light float-right' onClick={saveChanges}>Save</button>
             </div>
         </>
     )

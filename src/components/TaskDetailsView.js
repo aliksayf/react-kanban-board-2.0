@@ -1,19 +1,22 @@
 import React from 'react'
+import parse from 'html-react-parser';
 import {colors, priorityColors, statuses} from "../data/tasks";
 import {FaCircle, FaExclamationTriangle} from "react-icons/fa";
 
 function TaskDetailsView(props) {
 
     const {item} = props
+    const parser = new DOMParser();
+    // const doc = parser.parseFromString(item.description, "text/html")
 
     return (
         <>
             <div className='container p-4 '>
                 <h5>{item.name}</h5>
                 <table className="table table-borderless">
-                    <tbody>
                     <thead>
                     </thead>
+                    <tbody>
                     <tr className='row'>
                         <td className="col-2">Status:</td>
                         <td className="col-6">
@@ -35,10 +38,12 @@ function TaskDetailsView(props) {
                     </tbody>
                 </table>
                 <label>Description:</label>
-                <p>{item.description}</p>
+                <p>{parse(item.description)}</p>
                 <div>
-                    <button onClick={() => props.setShow(props.item, 'edit')}>Edit</button>
-                    <button onClick={props.setShow}>Close</button>
+                    <button className='btn btn-link float-right' onClick={props.setShow}>Close</button>
+                    <button className='btn btn-light float-right'
+                            onClick={() => props.setShow(props.item, 'edit')}>Edit
+                    </button>
                 </div>
             </div>
         </>
