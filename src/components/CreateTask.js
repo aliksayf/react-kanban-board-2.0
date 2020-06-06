@@ -3,9 +3,19 @@ import JoditEditor from "jodit-react";
 import 'jodit';
 import 'jodit/build/jodit.min.css';
 import {priority, statuses} from "../data/tasks";
+import {uuid} from 'uuidv4';
 
 
-function TaskDetailsView(props) {
+const newTask = {
+    id: uuid(),
+    name: '',
+    description: '',
+    status: 1,
+    queue: 0,
+    priority: 'Low'
+}
+
+function CreateTask(props) {
 
     const editor = useRef(null)
 
@@ -13,23 +23,25 @@ function TaskDetailsView(props) {
         readonly: false // all options from https://xdsoft.net/jodit/doc/
     }
 
-    const {item} = props
-    const [editedItem, setEditedItem] = useState(props.item)
+    const [editedItem, setEditedItem] = useState(newTask)
+    // const [disabledButton, setDisabledButton] = useState(true)
 
-    const saveChanges = () => {
-        props.changeTask(item.id, editedItem)
-        props.setShow(editedItem, 'details')
+    const saveTask = () => {
+        props.createNewTask(editedItem)
+        props.setShow()
     }
 
     return (
         <>
             <div className='container p-4 '>
+                <h5>Create new task</h5>
                 <table className="table table-borderless">
                     <tbody>
                     <tr className='row'>
-                        <td className="col-1">Name:</td>
+                        <td className="col-1">Name:&#42;</td>
                         <td className="col-6">
                             <input className="form-control-plaintext-sm pl-2"
+                                   required
                                    value={editedItem.name}
                                    onChange={(e) => setEditedItem({...editedItem, name: e.target.value})}
                             />
@@ -61,7 +73,7 @@ function TaskDetailsView(props) {
                                     onChange={(e) => setEditedItem({...editedItem, priority: e.target.value})}
                             >
                                 {priority.map(el => (
-                                    <option key={el}>{el}</option>))}
+                                    <option key={el} value={el === editedItem.priority}>{el}</option>))}
                             </select>
                         </td>
                     </tr>
@@ -90,12 +102,14 @@ function TaskDetailsView(props) {
                 </table>
 
                 <button className='btn btn-link float-right'
-                        onClick={() => props.setShow(props.item, 'details')}>Cancel
+                        onClick={props.setShow}>Cancel
                 </button>
-                <button className='btn btn-light float-right' onClick={saveChanges}>Save</button>
+                <button className='btn btn-light float-right ' disabled={editedItem.name === ''}
+                        onClick={saveTask}>Save
+                </button>
             </div>
         </>
     )
 }
 
-export default TaskDetailsView;
+export default CreateTask;

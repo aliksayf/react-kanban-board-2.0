@@ -30,8 +30,20 @@ function App() {
         setTaskList(changedTaskList)
     };
 
+    const createNewTask = (obj) => {
+        const newList = _.cloneDeep(tasks);
+        newList.push(obj)
+        const newArr = _.cloneDeep(status)
+        newList.map(el => newArr[el.status - 1].items.push(el))
+        // console.log('create', newArr)
+        setTaskList(newArr)
+    }
+
     return (
-        <div>
+        <div className='container'>
+
+            <button className='btn btn-sm btn-outline-dark ml-5' onClick={() => handleShowModal({}, 'create')}>Create
+            </button>
 
             <Board setShow={handleShowModal}
                    taskArray={taskList}
@@ -40,6 +52,7 @@ function App() {
                     setShow={handleShowModal}
                     item={modalItem}
                     type={modalType}
+                    createNewTask={createNewTask}
                     changeTask={changeTask}
             />
         </div>

@@ -38,7 +38,7 @@ function TaskDetailsView(props) {
                     </tbody>
                 </table>
                 <label>Description:</label>
-                <p>{parse(item.description)}</p>
+                <div className='border p-3'>{parse(item.description)}</div>
                 <div>
                     <button className='btn btn-link float-right' onClick={props.setShow}>Close</button>
                     <button className='btn btn-light float-right'
