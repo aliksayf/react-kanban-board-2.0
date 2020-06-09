@@ -8,6 +8,7 @@ import _ from "lodash";
 function arrangeTasks(statusArr, taskArr) {
     const newArr = _.cloneDeep(statusArr)
     taskArr.map(el => newArr[el.status - 1].items.push(el))
+
     return newArr
 }
 
@@ -17,6 +18,7 @@ function App() {
     const [modalType, setModalType] = useState('');
     const [taskList, setTaskList] = useState(arrangeTasks(status, tasks))
 
+
     const handleShowModal = (object, type) => {
         setShow(true)
         setModalItem(object)
@@ -24,21 +26,15 @@ function App() {
     };
 
     const changeTask = (id, obj) => {
-        const newList = _.cloneDeep(taskList);
-        newList.map((el, idx) => el.items.map((task, index) => task.id === id ? newList[idx].items[index] = Object.assign(obj) : ''))
-        const newTasks = []
-        newList.map(el => el.items.map(task => newTasks.push(task)))
-        const changedTaskList = _.cloneDeep(status)
-        newTasks.map(el => changedTaskList[el.status - 1].items.push(el))
-        setTaskList(changedTaskList)
+        const newTasks = taskList.map(el => el.items).flat()
+        newTasks.map((el, idx) => newTasks[idx] = el.id === id ? Object.assign(obj) : el)
+        setTaskList(arrangeTasks(status, newTasks))
     };
 
     const createNewTask = (obj) => {
-        const newList = _.cloneDeep(tasks);
-        newList.push(obj)
-        const newArr = _.cloneDeep(status)
-        newList.map(el => newArr[el.status - 1].items.push(el))
-        setTaskList(newArr)
+        const newTasks = taskList.map(el => el.items).flat()
+        newTasks.push(obj)
+        setTaskList(arrangeTasks(status, newTasks))
     }
 
     return (
@@ -57,6 +53,33 @@ function App() {
                     createNewTask={createNewTask}
                     changeTask={changeTask}
             />
+
+            <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                Launch demo modal
+            </button>
+
+            <div className="modal fade" id="exampleModal" tabIndex="-1" role="dialog"
+                 aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div className="modal-dialog">
+                    <div className="modal-content">
+                        <div className="modal-header">
+                            <h5 className="modal-title" id="exampleModalLabel">Modal title</h5>
+                            <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div className="modal-body">
+                            ...
+                        </div>
+                        <div className="modal-footer">
+                            <button type="button" className="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" className="btn btn-primary">Save changes</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
         </div>
     );
 }

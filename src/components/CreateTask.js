@@ -6,7 +6,7 @@ import {priority, statuses} from "../data/tasks";
 
 
 const newTask = {
-    id: Date.now(),
+    id: Date.now().toString(),
     name: '',
     description: '',
     status: 1,
