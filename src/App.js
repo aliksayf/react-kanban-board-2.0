@@ -5,14 +5,17 @@ import Modals from "./components/Modals";
 import {status, tasks} from "./data/tasks";
 import _ from "lodash";
 
-const newArr = _.cloneDeep(status)
-tasks.map(el => newArr[el.status - 1].items.push(el))
+function arrangeTasks(statusArr, taskArr) {
+    const newArr = _.cloneDeep(statusArr)
+    taskArr.map(el => newArr[el.status - 1].items.push(el))
+    return newArr
+}
 
 function App() {
     const [show, setShow] = useState(false);
     const [modalItem, setModalItem] = useState({});
     const [modalType, setModalType] = useState('');
-    const [taskList, setTaskList] = useState(newArr)
+    const [taskList, setTaskList] = useState(arrangeTasks(status, tasks))
 
     const handleShowModal = (object, type) => {
         setShow(true)
@@ -35,7 +38,6 @@ function App() {
         newList.push(obj)
         const newArr = _.cloneDeep(status)
         newList.map(el => newArr[el.status - 1].items.push(el))
-        // console.log('create', newArr)
         setTaskList(newArr)
     }
 

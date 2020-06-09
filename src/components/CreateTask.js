@@ -3,11 +3,10 @@ import JoditEditor from "jodit-react";
 import 'jodit';
 import 'jodit/build/jodit.min.css';
 import {priority, statuses} from "../data/tasks";
-import {uuid} from 'uuidv4';
 
 
 const newTask = {
-    id: uuid(),
+    id: Date.now(),
     name: '',
     description: '',
     status: 1,
